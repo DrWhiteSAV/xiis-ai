@@ -8,8 +8,8 @@ import { format } from 'date-fns';
 import { generateXiiResponse, ai } from '../services/geminiService';
 import { EMOJI_LIST } from '../config/constants';
 import { Header } from './ui/Header';
-import { Button } from './ui/Button';
-import { Input } from './ui/Input';
+import { Button } from './ui/CustomButton';
+import { Input } from './ui/CustomInput';
 
 import { AnimatedText } from './AnimatedText';
 

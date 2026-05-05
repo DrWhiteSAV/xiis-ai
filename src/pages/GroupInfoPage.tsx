@@ -4,8 +4,8 @@ import { useStore } from '../store';
 import { ArrowLeft, Camera, UserPlus, UserMinus, Trash2, Save, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Header } from '../components/ui/Header';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/CustomButton';
+import { Input } from '../components/ui/CustomInput';
 
 export const GroupInfoPage = () => {
   const { chatId } = useParams();
