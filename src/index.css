@@ -1,56 +1,213 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*, ::before, ::after {
+  box-sizing: border-box;
+}
 
-@layer base {
-  :root {
-    --background: 220 20% 4%;
-    --foreground: 40 20% 92%;
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --theme-color: #2196f3;
+  --blur-intensity: 0px;
+  --bg-blur-intensity: 0px;
+  --glass-opacity: 10%;
+  --glass-mix: 10%;
+  
+  /* Light Theme Defaults */
+  --tg-bg: #ffffff;
+  --tg-text: #222222;
+  --tg-hint: #999999;
+  --tg-glass-bg: color-mix(in srgb, color-mix(in srgb, var(--theme-color), white var(--glass-mix)), transparent calc(100% - var(--glass-opacity)));
+  --tg-glass-border: color-mix(in srgb, var(--theme-color), transparent 80%);
+  --tg-glass-shadow: color-mix(in srgb, var(--theme-color), transparent 50%);
+  --tg-input-bg: var(--tg-glass-bg);
+  
+  /* Background Pattern Variables */
+  --bg-radial-start: color-mix(in srgb, var(--theme-color), transparent 90%);
+  --bg-radial-end: color-mix(in srgb, var(--theme-color), transparent 65%);
+  --icon-grad-start: color-mix(in srgb, var(--theme-color), transparent 90%);
+  --icon-grad-end: color-mix(in srgb, var(--theme-color), transparent 75%);
+}
 
-    --card: 220 18% 8%;
-    --card-foreground: 40 20% 92%;
+.dark {
+  --tg-bg: #1c1c1c;
+  --tg-text: #ffffff;
+  --tg-hint: #aaaaaa;
+  --tg-glass-bg: color-mix(in srgb, color-mix(in srgb, var(--theme-color), white var(--glass-mix)), transparent calc(100% - var(--glass-opacity)));
+  --tg-glass-border: color-mix(in srgb, var(--theme-color), transparent 80%);
+  --tg-glass-shadow: color-mix(in srgb, var(--theme-color), transparent 50%);
+  --tg-input-bg: var(--tg-glass-bg);
 
-    --popover: 220 18% 8%;
-    --popover-foreground: 40 20% 92%;
+  /* Background Pattern Variables (Dark) */
+  --bg-radial-start: color-mix(in srgb, var(--theme-color), transparent 100%);
+  --bg-radial-end: color-mix(in srgb, var(--theme-color), transparent 90%);
+  --icon-grad-start: color-mix(in srgb, var(--theme-color), transparent 90%);
+  --icon-grad-end: color-mix(in srgb, var(--theme-color), transparent 75%);
+}
 
-    --primary: 45 100% 58%;
-    --primary-foreground: 220 20% 4%;
+@theme {
+  --color-tg-blue: var(--theme-color);
+  --color-tg-light-blue: var(--theme-color);
+  --color-tg-bg: var(--tg-bg);
+  --color-tg-text: var(--tg-text);
+  --color-tg-hint: var(--tg-hint);
+  --color-xiis-pink: #ff4081;
+  --color-xiis-blue: var(--theme-color);
+}
 
-    --secondary: 220 15% 14%;
-    --secondary-foreground: 40 20% 85%;
+@utility theme-button {
+  @apply flex-1 py-3 rounded-xl border transition-all flex items-center justify-center gap-2 font-bold text-sm glass-effect;
+  
+  &.active {
+    background-color: var(--theme-color) !important;
+    border-color: var(--theme-color) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px var(--tg-glass-shadow);
+  }
 
-    --muted: 220 15% 12%;
-    --muted-foreground: 220 10% 50%;
-
-    --accent: 45 100% 58%;
-    --accent-foreground: 220 20% 4%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 15% 16%;
-    --input: 220 15% 16%;
-    --ring: 45 100% 58%;
-
-    --radius: 0.75rem;
-
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-
-    --glow-primary: 0 0 60px hsl(45 100% 58% / 0.15);
-    --glow-strong: 0 0 120px hsl(45 100% 58% / 0.1);
+  &:not(.active) {
+    background-color: var(--tg-glass-bg) !important;
+    border-color: var(--tg-glass-border) !important;
+    color: var(--tg-text) !important;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+@keyframes breathing {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
 
-  body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-display);
-  }
+@utility logo-glow {
+  animation: breathing 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px var(--theme-color)) 
+          drop-shadow(0 0 25px rgba(var(--theme-color-rgb), 0.5))
+          drop-shadow(0 0 45px rgba(var(--theme-color-rgb), 0.2));
+  transition: filter 0.3s ease;
+}
+
+body {
+  background-color: var(--color-tg-bg);
+  color: var(--color-tg-text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background: transparent; /* Let BackgroundPattern show through */
+}
+
+/* Telegram-like scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.tg-chat-bg {
+  background-size: cover;
+  background-position: center;
+}
+
+.dark .tg-chat-bg {
+  background-image: none;
+  filter: none;
+}
+
+/* Apple Liquid Glass Style */
+@utility glass-effect {
+  background: var(--tg-glass-bg);
+  backdrop-filter: blur(var(--blur-intensity)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(180%);
+  border: 1px solid var(--tg-glass-border);
+  background-clip: padding-box;
+  position: relative;
+  box-shadow: 0 8px 32px 0 var(--tg-glass-shadow);
+  color: var(--tg-text);
+}
+
+@utility radial-round {
+  @apply glass-effect;
+  border-radius: 2.5rem;
+}
+
+.chat-list-bg {
+  position: relative;
+  background-color: #ffffff;
+}
+
+.dark .chat-list-bg {
+  background-color: transparent;
+}
+
+.chat-list-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://i.ibb.co/8DVMSjvq/xiislogofull.png');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .chat-list-bg::before {
+  opacity: 0.02;
+}
+
+@utility message-bubble {
+  @apply glass-effect rounded-2xl;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  background: var(--tg-glass-bg) !important;
+}
+
+.message-bubble-own {
+  background: var(--tg-glass-bg) !important;
+}
+
+.message-bubble-other {
+  background: var(--tg-glass-bg) !important;
+}
+
+.private-chat-bubble {
+}
+
+.channel-post {
+  border-radius: 1.5rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@utility input-glass {
+  backdrop-filter: blur(var(--blur-intensity)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(180%);
+  background: var(--tg-glass-bg) !important;
+  border: 1px solid var(--tg-glass-border) !important;
+  border-radius: 1.5rem;
+  color: var(--tg-text) !important;
+  box-shadow: 0 4px 12px var(--tg-glass-shadow);
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.dark input::placeholder, .dark textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@utility selection-highlight {
+  @apply hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors;
+}
+
+@utility active-highlight {
+  @apply bg-blue-50/50 dark:bg-blue-900/30;
 }
