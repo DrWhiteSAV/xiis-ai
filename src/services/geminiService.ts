@@ -1,7 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { Xii, Message, User } from "../types/index";
 
-export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const apiKey = process.env.GEMINI_API_KEY || '';
+export const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export async function generateXiiResponse(
   xii: Xii,
@@ -62,6 +63,9 @@ export async function generateXiiResponse(
   `;
 
   try {
+    if (!ai) {
+      return "API ключ не настроен. Добавьте GEMINI_API_KEY.";
+    }
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
