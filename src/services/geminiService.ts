@@ -63,6 +63,9 @@ export async function generateXiiResponse(
   `;
 
   try {
+    if (!ai) {
+      return "API ключ не настроен. Добавьте GEMINI_API_KEY.";
+    }
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
