@@ -525,7 +525,7 @@ export const ChatWindow = ({ chatId, onBack }: { chatId: string, onBack?: () => 
             const matches = text.match(emojiRegex);
             // If it's just one emoji (even with modifiers like skin tone which might show as multiple matches in simple regex)
             // but for simplicity we check if the whole string is just emojis and there's only one "base" emoji
-            return matches && matches.length === 1 && matches[0].length === text.length;
+            return !!(matches && matches.length === 1 && matches[0].length === text.length);
           })();
           
           const handleProfileClick = () => {
