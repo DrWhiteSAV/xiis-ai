@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from '../store';
 import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import { GlassCard } from '../components/ui/GlassCard';
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/ui/CustomButton';
 import { Header } from '../components/ui/Header';
 import { cn } from '../lib/utils';
 

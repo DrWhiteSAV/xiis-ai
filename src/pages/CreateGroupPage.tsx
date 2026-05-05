@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { cn } from '../lib/utils';
 import { GlassCard } from '../components/ui/GlassCard';
-import { Input } from '../components/ui/Input';
+import { Input } from '../components/ui/CustomInput';
 import { Header } from '../components/ui/Header';
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/ui/CustomButton';
 import { Search, Check, Users } from 'lucide-react';
 
 export const CreateGroupPage = () => {

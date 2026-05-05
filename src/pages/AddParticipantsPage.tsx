@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from '../store';
 import { cn } from '../lib/utils';
 import { GlassCard } from '../components/ui/GlassCard';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/CustomInput';
+import { Button } from '../components/ui/CustomButton';
 import { Search, Check, Users, ArrowLeft } from 'lucide-react';
 
 export const AddParticipantsPage = () => {
